@@ -5,33 +5,140 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <link href="main.css" rel="stylesheet">
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>React App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <div id="root">
+      <header class="header">
+        <div class="header_container">
+          <button class="nav_btn_header header_item"> 
+            <span class="nav_btn_text"><</span>
+          </button>
+          <button class="nav_btn_header header_item"> 
+            <span class="nav_btn_text">></span>
+          </button>
+          <p class="header_item register_btn">Зарегистрироваться</p>
+          <button class="sign_up_btn header_item">
+            <span class="sign_up_text">Войти</span>
+          </button>
+        </div>
+      </header>
+      <aside class="aside">
+        <img src="styles/img/logo.png" alt="лого" class="logo">
+        <nav>
+          <ul>
+            <li class="nav_elem">
+              <a href="#" class="icon_home nav_icon">
+                Главная
+              </a>
+            </li>
+            <li class="nav_elem">
+              <a href="#" class="icon_search nav_icon">
+                Поиск
+              </a>
+            </li>
+            <li class="nav_elem">
+              <a href="#" class="icon_media nav_icon">
+                Моя медиатека
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="main">
+        <h2 class="heading">Топ музыкантов</h2>
+        <div class="main_container">
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+        </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        <h2 class="heading">Фокус</h2>
+        <div class="main_container">
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="footer_text_content">
+          <p class="footer_text">Предварительный просмотр Spotify</p>
+          <p class="footer_text">Зарегистрируйся, чтобы слушать музыку и подкасты без ограничений</p>
+        </div>
+        <button class="sign_up_btn_footer">
+          <a href="#"><span class="sign_up_text_footer">Зарегистрироваться</span></a>
+        </button>
+      </footer>
+    </div>
   </body>
 </html>

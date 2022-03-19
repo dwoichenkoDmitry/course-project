@@ -1,0 +1,208 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
+    font-family: Arial;
+}
+
+#root{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: min-content 1fr min-content;
+}
+
+.header{  
+    height: 60px;
+    grid-column: 2/3;
+}
+
+.header_container{
+    position: fixed;
+    background-color: black;
+    right: 0;
+    left: 250px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.aside{
+    background-color: black;
+    grid-row: 1/3;
+}
+
+
+
+.footer{
+    background: linear-gradient(45deg, purple, blue);
+    height: 70px;
+    grid-column: 1/3;
+    display: flex;
+    align-items: center;
+}
+
+.footer_container{
+    position: fixed;
+    height: 70px; 
+}
+
+
+
+.logo{
+    width: 140px;
+    margin: 18px;
+}
+
+
+.icon_home::before {
+    content: url(./styles/icons/home.svg);
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+.icon_home {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.icon_search::before {
+    content: url(./styles/icons/search.svg);
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+.icon_search {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.icon_media::before {
+    content: url(./styles/icons/soundcloud.svg);
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+.icon_media {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.nav_icon{
+    color: white;
+    font-size: 19px;
+}
+
+.nav_elem{
+    padding: 7px 16px;
+}
+.main{
+    background-color: #121212;
+}
+
+.heading{
+    color: white;
+    padding: 10px 32px;
+}
+
+.main_container{
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr) );
+    padding: 15px;
+}
+
+.main_elem{
+    background-color: #221222;
+    height: 300px;
+    border-radius: 20px;
+}   
+
+.nav_btn_header{
+    background-color: black;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.nav_btn_text{
+    color: white;
+    font-size: 23px;
+}
+
+.sign_up_btn{
+    width: 130px;
+    border: none;
+    height: 45px;
+    
+    background-color: white;
+    border-radius: 22px;
+    
+    margin-right: 20px;
+}
+
+.sign_up_text{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.register_btn{
+    color: white;
+    margin-left: auto;
+    margin-right: 20px;  
+}
+
+.main_item_container{
+    width: 90%;
+    height: 100%;
+    margin-left: 5%;
+
+}
+
+.cont_img{
+    width: 100%;
+    height: 70%;
+    background-color: blue;
+    border-radius: 10px;
+    margin-top: 10px;  
+}
+
+.cont_text{
+    
+    margin-top: 10px;
+    color: white;
+}
+
+.footer_text{
+    color: white;
+}
+
+.sign_up_btn_footer{
+    width: 230px;
+    border: none;
+    height: 45px;
+    
+    background-color: white;
+    border-radius: 22px;
+}
+
+.sign_up_text_footer{
+    font-size: 18px;
+    font-weight: bold;
+    color: blue;
+}
+
+.footer_text_content{
+    width: 70%;
+    margin-left: 100px;
+}
