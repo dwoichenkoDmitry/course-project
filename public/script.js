@@ -1,3 +1,7 @@
+const audio = document.querySelector('.audit')
+const URL = 'https://api.spotify.com'
+const search = document.querySelector('.searchInput');
+
 /**
  * Инкапсуляция методов запросов к API
  * @type {{getArtists(*, *): Promise<*>, getBestSoundArtists(*, *): Promise<*>, getToken(): Promise<*>, getAlbums(*): Promise<*>}}
@@ -20,28 +24,13 @@ const APIController = (function() {
                 'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
             },
             body: 'grant_type=client_credentials'
-        });
+        }).catch(err => console.log(err));
 
         const data = await result.json();
         return data.access_token;
     }
 
-    /**
-     * Запрос на вывод начальных артистов
-     * @param token
-     * @returns {Promise<any>}
-     * @private
-     */
-    const _getAlbums = async (token) => {
 
-        const result = await fetch(`https://api.spotify.com/v1/artists?ids=2CIMQHirSU0MQqyYHq0eOx%2C57dN52uHvrHOxijzpIgu3E%2C1vCWHaC5f2uS3yhpwWbIA6`, {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-        });
-
-        const data = await result.json();
-        return data;
-    }
 
     /**
      * Запрос на получение списка из 10 артистов по совпадением с содержимым строки поиска
@@ -52,10 +41,10 @@ const APIController = (function() {
      */
     const _getArtists = async (searchArtists, token) => {
 
-        const result = await fetch('https://api.spotify.com/v1/search?q=artist%3A'+ searchArtists+'&type=artist&market=ES&limit=10 ', {
+        const result = await fetch(URL +'/v1/search?q=artist%3A'+ searchArtists+'&type=artist&market=ES&limit=10 ', {
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token}
-        });
+        }).catch(err => console.log(err));
 
         const data = await result.json();
         return data;
@@ -63,6 +52,7 @@ const APIController = (function() {
 
     /**
      * Запрос на получение лучших треков выбранного артиста
+     * Этот метод используется при открытии popup
      * @param searchArtists
      * @param token
      * @returns {Promise<any>}
@@ -70,10 +60,10 @@ const APIController = (function() {
      */
     const _getBestSoundArtists = async (searchArtists, token) => {
 
-        const result = await fetch('https://api.spotify.com/v1/artists/'+ searchArtists+'/top-tracks?market=ES', {
+        const result = await fetch(URL + '/v1/artists/'+ searchArtists+'/top-tracks?market=ES', {
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token}
-        });
+        }).catch(err => console.log(err));
 
         const data = await result.json();
         return data;
@@ -84,9 +74,6 @@ const APIController = (function() {
     return {
         getToken() {
             return _getToken();
-        },
-        getAlbums(token) {
-            return _getAlbums(token);
         },
         getArtists(search, token){
             return _getArtists(search, token)
@@ -105,10 +92,8 @@ const APIController = (function() {
  */
 const searchArtists = async () => {
     const token = await APIController.getToken();
-    document.querySelector('.tokenHide').innerHTML = token;
-    let search = document.querySelector('.searchInput').value;
-    console.log(search)
-    const results = await APIController.getArtists(search, token);
+    document.cookie = token;
+    const results = await APIController.getArtists(search.value, getTokenFromCookie());
 
     document.querySelector('.main').innerHTML = '<div class="main_container">\n' +
         '\n' +
@@ -136,25 +121,17 @@ const searchArtists = async () => {
 searchArtists();
 
 
-
-function searchClick(){
-    document.querySelector('.main').innerHTML = '<div class="main_container">\n' +
-        '\n' +
-        '        </div>';
-    document.querySelector('.container-1').classList = 'container-1'
-}
-
-
 /**
  * Событие сокрытия popup-а
  */
 document.querySelector('.popup')
     .addEventListener('click', function (e) {
         let popupContent = document.querySelector('.popup')
-        if(e.target===popupContent){
+        if(e.target==popupContent){
             document.querySelector('.popup').classList += ' popup_disabled';
         }
-});
+    });
+
 
 /**
  * Открытие popup-а и заполнение первичных данных
@@ -163,7 +140,6 @@ document.querySelector('.popup')
 function AddEventForClick(){
     document.querySelectorAll('.main_elem').forEach((item) => {
         item.addEventListener('click', function (e) {
-            console.log(e.currentTarget.querySelector('.hidenInfoId'));
             let popup = document.querySelector('.popup');
             popup.classList.remove('popup_disabled');
             popup.querySelector('.popup_authorName').innerHTML =
@@ -180,15 +156,32 @@ function AddEventForClick(){
 }
 
 /**
+ * функция получения токена из cookie файлов
+ * @returns {string}
+ */
+function getTokenFromCookie(){
+    if (document.cookie.length > 0) {
+        let startIndex = document.cookie.indexOf("token=");
+        if (startIndex != -1) {
+            startIndex = startIndex + 6;
+
+            return document.cookie.substring(startIndex);
+        }
+    }
+    return "";
+}
+
+/**
  * Заполнение popup-а лучшими треками исполнителя
+ * Никак не могу понять, что именно вынести в отдельный метод
+ * И итерируемая коллекция, и метод заполнения совершенно разные
  * @param search
  * @param popup
  * @returns {Promise<void>}
  */
 const fillPopup = async (search, popup) => {
-    const token = await APIController.getToken();
-    const results = await APIController.getBestSoundArtists(search, token);
     popup.querySelector('.main_container').innerHTML="";
+    const results = await APIController.getBestSoundArtists(search, getTokenFromCookie());
     results.tracks.forEach((item) => {
         let imgUrl = item.album.images[0].url;
 
@@ -212,8 +205,13 @@ const fillPopup = async (search, popup) => {
 function AddEventForSound(popup){
     popup.querySelectorAll('.main_elem').forEach((item) => {
         item.addEventListener('click', function (e) {
+            if(item.querySelector('.hidenTrack').innerHTML !== 'null'){
             document.querySelector('.audit').src =
                 item.querySelector('.hidenTrack').innerHTML;
+            }
+            else{
+                alert("Артист не добавил запись на этот трек")
+            }
 
             PlayerPlay();
             document.querySelector('.popup').classList += ' popup_disabled';
@@ -226,24 +224,20 @@ function AddEventForSound(popup){
  * @constructor
  */
 function PlayerPause(){
-    document.querySelector('.audit').pause();
+    audio.pause();
 }
 
 function PlayerPlay(){
-    let audio = document.querySelector('.audit')
-    if(audio.src != "http://localhost:3000/null")
-        audio.play()
+    audio.play()
 }
 
 function PlayerMinus(){
-    let audio = document.querySelector('.audit')
     if(audio.volume > 0.1){
         audio.volume-=0.1
     }
 }
 
 function PlayerPlus(){
-    let audio = document.querySelector('.audit')
     if(audio.volume < 1){
         audio.volume+=0.1
     }
