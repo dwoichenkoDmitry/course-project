@@ -1,89 +1,7 @@
+import {APIController} from "./APIController.js";
 const audio = document.querySelector('.audit')
-const URL = 'https://api.spotify.com'
 const search = document.querySelector('.searchInput');
 
-/**
- * Инкапсуляция методов запросов к API
- * @type {{getArtists(*, *): Promise<*>, getBestSoundArtists(*, *): Promise<*>, getToken(): Promise<*>, getAlbums(*): Promise<*>}}
- */
-const APIController = (function() {
-    const clientId = '6e3308bdbd0443aabfa1e7a312cb5a3e';
-    const clientSecret = '0cfd383fbac34bd5ae561df0a75eb02a';
-
-    /**
-     * Запрос на получение токена доступа
-     * @returns {Promise<any>}
-     * @private
-     */
-    const _getToken = async () => {
-
-        const result = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/x-www-form-urlencoded',
-                'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
-            },
-            body: 'grant_type=client_credentials'
-        }).catch(err => console.log(err));
-
-        const data = await result.json();
-        return data.access_token;
-    }
-
-
-
-    /**
-     * Запрос на получение списка из 10 артистов по совпадением с содержимым строки поиска
-     * @param searchArtists
-     * @param token
-     * @returns {Promise<any>}
-     * @private
-     */
-    const _getArtists = async (searchArtists, token) => {
-
-        const result = await fetch(URL +'/v1/search?q=artist%3A'+ searchArtists+'&type=artist&market=ES&limit=10 ', {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-        }).catch(err => console.log(err));
-
-        const data = await result.json();
-        return data;
-    }
-
-    /**
-     * Запрос на получение лучших треков выбранного артиста
-     * Этот метод используется при открытии popup
-     * @param searchArtists
-     * @param token
-     * @returns {Promise<any>}
-     * @private
-     */
-    const _getBestSoundArtists = async (searchArtists, token) => {
-
-        const result = await fetch(URL + '/v1/artists/'+ searchArtists+'/top-tracks?market=ES', {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-        }).catch(err => console.log(err));
-
-        const data = await result.json();
-        return data;
-    }
-
-
-
-    return {
-        getToken() {
-            return _getToken();
-        },
-        getArtists(search, token){
-            return _getArtists(search, token)
-        },
-        getBestSoundArtists(search, token){
-            return _getBestSoundArtists(search, token)
-        }
-
-    }
-})();
 
 
 /**
@@ -91,9 +9,9 @@ const APIController = (function() {
  * @returns {Promise<void>}
  */
 const searchArtists = async () => {
-    const token = await APIController.getToken();
-    document.cookie = token;
-    const results = await APIController.getArtists(search.value, getTokenFromCookie());
+    console.log(search)
+    console.log(search.value)
+    const results = await APIController.getArtists(search.value, localStorage.getItem("token"));
 
     document.querySelector('.main').innerHTML = '<div class="main_container">\n' +
         '\n' +
@@ -155,21 +73,6 @@ function AddEventForClick(){
     });
 }
 
-/**
- * функция получения токена из cookie файлов
- * @returns {string}
- */
-function getTokenFromCookie(){
-    if (document.cookie.length > 0) {
-        let startIndex = document.cookie.indexOf("token=");
-        if (startIndex != -1) {
-            startIndex = startIndex + 6;
-
-            return document.cookie.substring(startIndex);
-        }
-    }
-    return "";
-}
 
 /**
  * Заполнение popup-а лучшими треками исполнителя
@@ -181,7 +84,7 @@ function getTokenFromCookie(){
  */
 const fillPopup = async (search, popup) => {
     popup.querySelector('.main_container').innerHTML="";
-    const results = await APIController.getBestSoundArtists(search, getTokenFromCookie());
+    const results = await APIController.getBestSoundArtists(search, localStorage.getItem("token"));
     results.tracks.forEach((item) => {
         let imgUrl = item.album.images[0].url;
 
@@ -218,6 +121,10 @@ function AddEventForSound(popup){
         })
     })
 }
+
+document.querySelector('.searchInput').addEventListener('change', ()=>{
+    searchArtists()
+})
 
 /**
  * Методы управления воспроизведением мелодии
