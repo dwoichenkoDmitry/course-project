@@ -9,9 +9,8 @@ const search = document.querySelector('.searchInput');
  * @returns {Promise<void>}
  */
 const searchArtists = async () => {
-    console.log(search)
-    console.log(search.value)
-    const results = await APIController.getArtists(search.value, localStorage.getItem("token"));
+    const token = await APIController.getToken();
+    const results = await APIController.getArtists(search.value, token);
 
     document.querySelector('.main').innerHTML = '<div class="main_container">\n' +
         '\n' +
@@ -84,7 +83,8 @@ function AddEventForClick(){
  */
 const fillPopup = async (search, popup) => {
     popup.querySelector('.main_container').innerHTML="";
-    const results = await APIController.getBestSoundArtists(search, localStorage.getItem("token"));
+    const token = await APIController.getToken();
+    const results = await APIController.getBestSoundArtists(search, token);
     results.tracks.forEach((item) => {
         let imgUrl = item.album.images[0].url;
 
@@ -111,12 +111,13 @@ function AddEventForSound(popup){
             if(item.querySelector('.hidenTrack').innerHTML !== 'null'){
             document.querySelector('.audit').src =
                 item.querySelector('.hidenTrack').innerHTML;
+                PlayerPlay();
             }
             else{
                 alert("Артист не добавил запись на этот трек")
             }
 
-            PlayerPlay();
+
             document.querySelector('.popup').classList += ' popup_disabled';
         })
     })
@@ -127,25 +128,37 @@ document.querySelector('.searchInput').addEventListener('change', ()=>{
 })
 
 /**
- * Методы управления воспроизведением мелодии
+ * Функция запуска трека
  * @constructor
  */
-function PlayerPause(){
-    audio.pause();
-}
-
 function PlayerPlay(){
     audio.play()
 }
 
-function PlayerMinus(){
-    if(audio.volume > 0.1){
-        audio.volume-=0.1
-    }
-}
+/**
+ * События управлеия воспроизведением мелодии
+ */
+document.querySelector('.playerPause')
+    .addEventListener('click', ()=>{
+    audio.pause();
+})
 
-function PlayerPlus(){
-    if(audio.volume < 1){
-        audio.volume+=0.1
-    }
-}
+document.querySelector('.playerPlay')
+    .addEventListener('click', ()=>{
+        audio.play()
+})
+
+document.querySelector('.playerMinus')
+    .addEventListener('click', ()=>{
+        if(audio.volume > 0.1){
+            audio.volume-=0.1
+        }
+})
+
+document.querySelector('.playerPlus')
+    .addEventListener('click', ()=>{
+        if(audio.volume < 1){
+            audio.volume+=0.1
+        }
+})
+

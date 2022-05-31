@@ -15,26 +15,48 @@ export const APIController = (function() {
      * @private
      */
     const _getToken = async () => {
-
-        const result = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/x-www-form-urlencoded',
-                'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
-            },
-            body: 'grant_type=client_credentials'
-        }).catch(err => console.log(err));
-        console.log("tyui")
-        const data = await result.json();
-        localStorage.setItem("token", data.access_token);
+        let token = getTokenFromCookie()
+        if(token){
+            return token
+        }
+        else{
+            const result = await fetch('https://accounts.spotify.com/api/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/x-www-form-urlencoded',
+                    'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
+                },
+                body: 'grant_type=client_credentials'
+            }).catch(err => console.log(err));
+            const data = await result.json();
+            document.cookie = 'accessToken=' + data.access_token
+            return data.access_token
+        }
     }
 
-
+    /**
+     * Получение токена доступа из cookie
+     * @returns {string}
+     */
+    function getTokenFromCookie(){
+        let name = 'accessToken'
+        if (document.cookie.length > 0) {
+            let start = document.cookie.indexOf(name + "=");
+            if (start !== -1) {
+                start = start + name.length + 1;
+                let end = document.cookie.indexOf(";", start);
+                if (end === -1) {
+                    end = document.cookie.length;
+                }
+                return unescape(document.cookie.substring(start, end));
+            }
+        }
+        return "";
+    }
 
     /**
      * Запрос на получение списка из 10 артистов по совпадением с содержимым строки поиска
      * @param searchArtists
-     * @param token
      * @returns {Promise<any>}
      * @private
      */
@@ -46,7 +68,6 @@ export const APIController = (function() {
      * Запрос на получение лучших треков выбранного артиста
      * Этот метод используется при открытии popup
      * @param searchArtists
-     * @param token
      * @returns {Promise<any>}
      * @private
      */
@@ -59,25 +80,20 @@ export const APIController = (function() {
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token}
         }).catch(err => {
-            console.log(err)
+            throw new Error(err);
         });
 
-        if(result.status !== 200){
-            if(result.status === 401){
-                _getToken()
-                return GetRequestPattern(url, token)
-            }
-            else {
-                throw new Error('Get error');
-            }
-        }
-        else {
-            const data = await result.json();
-            return data;
-        }
+
+
+        const data = await result.json();
+        return data;
+
     }
 
     return {
+        getToken(){
+            return _getToken()
+        },
         getArtists(search, token){
             return _getArtists(search, token)
         },
