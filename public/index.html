@@ -5,33 +5,108 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <link href="main.css" rel="stylesheet">
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>React App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <div id="root">
+      <p class="tokenHide"></p>
+      <header class="header">
+        <div class="header_container">
+<!--          <button class="nav_btn_header header_item">-->
+<!--            <span class="nav_btn_text">&#60</span>-->
+<!--          </button>-->
+<!--          <button class="nav_btn_header header_item">-->
+<!--            <span class="nav_btn_text">&#62</span>-->
+<!--          </button>-->
+          <div class="container-1 search_disable">
+            <input  type="search" autocomplete="off" class="searchInput" id="search" placeholder="Search..." />
+          </div>
+          <p class="header_item register_btn">Зарегистрироваться</p>
+          <button class="user_btn header_item">
+            <img src="img/user.svg">
+          </button>
+        </div>
+      </header>
+      <aside class="aside">
+        <div class="aside_container">
+          <img src="styles/img/logo.png" alt="лого" class="logo">
+              <a href="#"  class="icon_search nav_elem nav_icon">
+                <img src="./styles/icons/search.svg" alt="Картинка">
+                Поиск
+              </a>
+        </div>
+      </aside>
+      <main class="main">
+        <h2 class="heading">Топ музыкантов</h2>
+        <div class="main_container">
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        </div>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        <h2 class="heading">Фокус</h2>
+        <div class="main_container">
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+          <div class="main_elem">
+            <div class="main_item_container">
+              <div class="cont_img"></div>
+              <h3 class="cont_text">Название альбома</h3>
+              <p class="cont_text">Описание альбома</p>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="player">
+          <button class="playerBtn playerPause"><img class="sqImg" src="img/square.svg"></button>
+          <button class="playerBtn playerPlay">&#9658</button>
+          <button class="playerBtn playerMinus">-</button>
+          <button class="playerBtn playerPlus">+</button>
+        </div>
+      </footer>
+
+
+      <div class="popup popup_disabled">
+        <div class="popup-content">
+          <div class="popup_header">
+            <img class="popup_authorImg" src="https://i.scdn.co/image/ab6761610000e5ebecc26d01f8ede25e066f6a2e" alt="Author">
+            <div class="popup_textContainer">
+              <h1 class="popup_authorName"></h1>
+              <p class="popup_publicCount"><span class="popup_followCount_value"></span></p>
+            </div>
+
+          </div>
+          <h2 class="heading">Популярные треки</h2>
+          <div class="main_container">
+          </div>
+        </div>
+      </div>
+      <audio class="audit" src="https://p.scdn.co/mp3-preview/1477150a7e55da977b60801f29c7ab79c8d49b18?cid=6e3308bdbd0443aabfa1e7a312cb5a3e"></audio>
+    </div>
+    <script type="module" src="script.js"></script>
   </body>
 </html>
