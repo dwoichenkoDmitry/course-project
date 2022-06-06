@@ -1,0 +1,22 @@
+.main{
+    background-color: #121212;
+    grid-area: content;
+}
+
+.heading{
+    color: #FFF;
+    padding: 10px 32px;
+}
+
+.main_container{
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0.5fr) );
+    padding: 15px;
+}
+
+.NoneResults{
+    color: #FFF;
+    text-align: center;
+    margin-top: 100px;
+}

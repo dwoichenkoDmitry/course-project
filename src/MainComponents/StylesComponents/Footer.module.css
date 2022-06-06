@@ -1,0 +1,31 @@
+.footer{
+    background: linear-gradient(45deg, #800080, #0000FF);
+    height: 70px;
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+}
+
+.player{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    height: 50px;
+    background-color: #221222;
+    border-radius: 25px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.playerBtn{
+    width: 40px;
+    height: 40px;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 25px;
+}
+
+.playerBtnMain:focus{
+    border: 2px #000 solid;
+}
