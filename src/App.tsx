@@ -49,16 +49,14 @@ function App() {
               setBestSound={setBestSound}
         />
         <Footer playerLink={currentPlayerLink} audioRef={audioRef} />
-        {showPopup?
-            <PopupArtist artistInfo={artistInfo}
-                         ShowArtist={setShowPopup}
-                         bestSoundOfArtist={bestSoundOfArtist}
-                         setTrackLink={setCurrentPlayerLink}
-                         audioRef={audioRef}
-            />
-            :
-            ''
-        }
+        <PopupArtist artistInfo={artistInfo}
+                     ShowArtist={setShowPopup}
+                     bestSoundOfArtist={bestSoundOfArtist}
+                     setTrackLink={setCurrentPlayerLink}
+                     audioRef={audioRef}
+                     popupVisible={showPopup}
+        />
+
         <audio src={currentPlayerLink} ref={audioRef}></audio>
     </div>
   );

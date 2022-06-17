@@ -29,3 +29,7 @@
 .playerBtnMain:focus{
     border: 2px #000 solid;
 }
+
+.sqImg{
+    width: 20px;
+}

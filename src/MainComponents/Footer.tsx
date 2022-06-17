@@ -40,8 +40,8 @@ const Footer = (props: {playerLink: string, audioRef: any|Ref<HTMLAudioElement>}
     return (
         <div className={classes.footer}>
             <div className={classes.player}>
-                <button onClick={Play} className={[classes.playerBtn, classes.playerBtnMain].join(' ')}><img className="sqImg" src={PlayImg}/></button>
-                <button onClick={Stop} className={[classes.playerBtn, classes.playerBtnMain].join(' ')}><img className="sqImg" src="img/square.svg"/></button>
+                <button onClick={Play} className={[classes.playerBtn, classes.playerBtnMain].join(' ')}><img className={classes.sqImg} src={PlayImg}/></button>
+                <button onClick={Stop} className={[classes.playerBtn, classes.playerBtnMain].join(' ')}><img className={classes.sqImg} src="img/square.svg"/></button>
                 <button onClick={Minus} className={classes.playerBtn}>-</button>
                 <button onClick={Plus} className={classes.playerBtn}>+</button>
             </div>

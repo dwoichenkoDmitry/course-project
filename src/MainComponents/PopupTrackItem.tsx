@@ -16,6 +16,10 @@ const PopupTrackItem = (props: {track: IBestSound, setTrackLink: Function, audio
     function ChangeAudio(){
         if(props.track.url!==null){
             props.setTrackLink(props.track.url)
+            /**
+             * setTimeout я поставил по той причине, что React не успевает вставить трек в плеер,
+             * прежде чем выполнится play. Без задержки, для воспроизведения требуется два клика по треку
+             */
             setTimeout(() => {props.audioRef.current.play()},10)
 
         }

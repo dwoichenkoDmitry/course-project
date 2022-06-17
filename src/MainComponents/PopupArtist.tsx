@@ -15,6 +15,7 @@ const PopupArtist = (props: {
     bestSoundOfArtist:IBestSound[]
     setTrackLink: Function
     audioRef: any|Ref<HTMLAudioElement>
+    popupVisible: boolean
 }) => {
     /**
      * Жизненный цикл popup-а, обработка закрытия окна при клике снаружи окна popup-а
@@ -41,30 +42,35 @@ const PopupArtist = (props: {
     useOutsideAlerter(wrapperRef);
 
     return (
-        <div className={classes.popup}>
-            <div ref={wrapperRef} className={classes.popup_content}>
-                <div className={classes.popup_header}>
-                    <img className={classes.popup_authorImg}
-                         src={props.artistInfo.img} alt="Author"/>
-                        <div className="popup_textContainer">
-                            <h1 className={classes.popup_authorName}>{props.artistInfo.name}</h1>
-                            <p className={classes.popup_publicCount}>
-                                {props.artistInfo.followers}
-                            </p>
-                        </div>
+        <div>
+            {props.popupVisible?
+                <div className={classes.popup}>
+                    <div ref={wrapperRef} className={classes.popup_content}>
+                        <div className={classes.popup_header}>
+                            <img className={classes.popup_authorImg}
+                                 src={props.artistInfo.img} alt="Author"/>
+                            <div className="popup_textContainer">
+                                <h1 className={classes.popup_authorName}>{props.artistInfo.name}</h1>
+                                <p className={classes.popup_publicCount}>
+                                    {props.artistInfo.followers}
+                                </p>
+                            </div>
 
+                        </div>
+                        <h2 className="heading">Популярные треки</h2>
+                        <div className="main_container">
+                            {props.bestSoundOfArtist.map((track: IBestSound, index: number) =>
+                                <PopupTrackItem key={index}
+                                                track={track}
+                                                setTrackLink={props.setTrackLink}
+                                                audioRef={props.audioRef}
+                                />
+                            )}
+                        </div>
+                    </div>
                 </div>
-                <h2 className="heading">Популярные треки</h2>
-                <div className="main_container">
-                    {props.bestSoundOfArtist.map((track: IBestSound, index: number) =>
-                        <PopupTrackItem key={index}
-                                track={track}
-                                setTrackLink={props.setTrackLink}
-                                audioRef={props.audioRef}
-                        />
-                    )}
-                </div>
-            </div>
+                :
+                ''}
         </div>
     );
 };
