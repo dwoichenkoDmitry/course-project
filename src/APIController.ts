@@ -14,23 +14,26 @@ export const APIController = (function() {
      * @returns {Promise<any>}
      * @private
      */
-    const _getToken = async () => {
+    const _getToken= async () => {
         let token = getTokenFromCookie()
         if(token){
             return token
         }
-        else{
-            const result = await fetch('https://accounts.spotify.com/api/token', {
+        else {
+            await fetch('https://accounts.spotify.com/api/token', {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/x-www-form-urlencoded',
                     'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
                 },
                 body: 'grant_type=client_credentials'
-            }).catch(err => console.log(err));
-            const data = await result.json();
-            document.cookie = 'accessToken=' + data.access_token
-            return data.access_token
+            }).then((response) => response.json())
+                .then((data) => {
+                    document.cookie = 'accessToken=' + data.access_token
+                    token = data.access_token
+                })
+                .catch(console.log);
+            return  token;
         }
     }
 
@@ -60,7 +63,7 @@ export const APIController = (function() {
      * @returns {Promise<any>}
      * @private
      */
-    const _getArtists = async (searchArtists, token) => {
+    const _getArtists = async (searchArtists: string, token: string) => {
         return GetRequestPattern(URL +'/v1/search?q=artist%3A'+ searchArtists+'&type=artist&market=ES&limit=10', token)
     }
 
@@ -71,35 +74,34 @@ export const APIController = (function() {
      * @returns {Promise<any>}
      * @private
      */
-    const _getBestSoundArtists = async (searchArtists, token) => {
+    const _getBestSoundArtists = async (searchArtists: string, token: string) => {
         return GetRequestPattern(URL + '/v1/artists/'+ searchArtists+'/top-tracks?market=ES', token)
     }
 
-    const GetRequestPattern = async (url, token) => {
+    const GetRequestPattern = async (url: string, token: string) => {
         const result = await fetch(url, {
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token}
         }).catch(err => {
+            if(err.status === 401){
+                document.cookie = 'accessToken='
+                _getToken()
+            }
             throw new Error(err);
         });
-
-
-
         const data = await result.json();
         return data;
-
     }
 
     return {
         getToken(){
             return _getToken()
         },
-        getArtists(search, token){
+        getArtists(search: string, token: string){
             return _getArtists(search, token)
         },
-        getBestSoundArtists(search, token){
+        getBestSoundArtists(search: string, token: string){
             return _getBestSoundArtists(search, token)
         }
-
     }
 })();

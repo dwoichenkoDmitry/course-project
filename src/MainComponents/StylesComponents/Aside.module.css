@@ -1,0 +1,28 @@
+.aside{
+    background-color: #000;
+    grid-area: aside;
+}
+
+.aside_container{
+    position: fixed;
+}
+
+.logo{
+    width: 140px;
+    margin: 18px;
+}
+
+.icon_search {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.nav_elem{
+    padding: 7px 16px;
+}
+
+.nav_icon{
+    color: #FFF;
+    font-size: 19px;
+}

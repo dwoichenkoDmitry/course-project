@@ -1,0 +1,59 @@
+.popup{
+    width:100%;
+    min-height:100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow:hidden;
+    position:fixed;
+    top:0px;
+}
+
+.popup_content{
+    margin:40px auto 0px auto;
+    width:80vw;
+    height: 80vh;
+    background: linear-gradient(180deg, #800080, #121212);
+    border-radius:5px;
+    overflow: auto;
+    box-shadow: 0px 0px 10px #000;
+}
+
+.popup_header{
+    background: linear-gradient(45deg, #800080, #0000FF);
+    width: 1fr;
+    height: 250px;
+    display: flex;
+    align-items: end;
+}
+
+.popup_authorImg{
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+    margin: 0 0 10px 10px;
+}
+
+.popup_authorName{
+    font-size: 50px;
+    color: #FFFFFF;
+    margin-bottom: 25px;
+    margin-left: 30px;
+}
+
+.popup_publicCount{
+    color: white;
+    font-size: 25px;
+    margin-left: 30px;
+}
+
+.heading{
+    color: #FFF;
+    padding: 10px 32px;
+}
+
+.main_container{
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0.5fr) );
+    padding: 15px;
+}
+

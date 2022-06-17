@@ -11,8 +11,6 @@
 #root{
     display: grid;
     height: 100vh;
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: min-content 1fr min-content;
 }
 
 .header{  
@@ -124,7 +122,6 @@
     margin-right: 20px;
     margin-left: auto;
     padding-top: 5px;
-
 }
 
 
@@ -136,7 +133,6 @@
     width: 90%;
     height: 100%;
     margin-left: 10px;
-
 }
 
 .cont_img{
@@ -148,7 +144,6 @@
 }
 
 .cont_text{
-    
     margin-top: 10px;
     color: #FFF;
 }
@@ -211,8 +206,8 @@
     overflow:hidden;
     position:fixed;
     top:0px;
-
 }
+
 .popup .popup-content{
     margin:40px auto 0px auto;
     width:80vw;
@@ -275,7 +270,6 @@
     border-radius: 25px;
     margin: 0 auto;
     padding: 0 20px;
-
 }
 
 .sqImg{

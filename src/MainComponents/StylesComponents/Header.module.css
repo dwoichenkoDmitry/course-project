@@ -1,0 +1,35 @@
+.header{
+   height: 60px;
+   grid-area: header;
+}
+
+.header_container{
+   position: fixed;
+   background-color: #000;
+   right: 0;
+   left: 250px;
+   height: 60px;
+   display: flex;
+   align-items: center;
+}
+
+
+
+.searchInput{
+   height: 36px;
+   width: 200px;
+   border-radius: 18px;
+   font-size: 20px;
+   padding-left: 10px;
+}
+
+.user_btn{
+   width: 40px;
+   border: none;
+   height: 40px;
+   background-color: #FFF;
+   border-radius: 20px;
+   margin-right: 20px;
+   margin-left: auto;
+   padding-top: 5px;
+}

@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
+    font-family: Arial;
+}
+
+.App{
+    display: grid;
+    height: 100vh;
+    grid-template-areas: "aside header"
+                         "aside content"
+                         "footer footer";
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+}
